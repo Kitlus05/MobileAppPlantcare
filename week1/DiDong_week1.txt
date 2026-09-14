@@ -1,0 +1,5 @@
+Chủ đề tìm hiểu về: 
+Kiến trúc Android core (Trong ảnh: có mô tả ý nghĩa luôn) (1 png)
+Trình tự build Android trên kit nhúng (Trong ảnh: có mô tả ý nghĩa luôn) (1-2 png)
+Output: 2-3 file ảnh ENGLISH (tỉ lệ 16:9)  Nộp utex
+Present: Đánh giá nhanh tại lớp (cuối buổi, xong thì về) 
