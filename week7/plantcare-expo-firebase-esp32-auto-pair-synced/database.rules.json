@@ -1,0 +1,57 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+
+    "devices": {
+      "$deviceId": {
+        ".read": "auth != null && auth.token.firebase.sign_in_provider === 'anonymous' && data.child('device_uid').val() === auth.uid",
+        ".write": "auth != null && (auth.token.firebase.sign_in_provider === 'anonymous' ? auth.uid === newData.child('device_uid').val() && (!data.exists() || data.child('device_uid').val() === auth.uid) : (data.exists() && data.child('claimable').val() === true && data.child('device_uid').val() === newData.child('device_uid').val() && newData.child('owner_uid').val() === auth.uid && newData.child('plant_id').isString()) || (data.exists() && data.child('owner_uid').val() === auth.uid && !newData.child('owner_uid').exists() && !newData.child('plant_id').exists() && newData.child('claimable').val() === true) || (data.exists() && data.child('owner_uid').val() === auth.uid && newData.child('owner_uid').val() === data.child('owner_uid').val() && newData.child('plant_id').val() === data.child('plant_id').val() && newData.child('claimable').val() === data.child('claimable').val())))",
+        ".validate": "!newData.exists() || (newData.child('device_id').val() === $deviceId && newData.child('device_uid').isString() && newData.child('claimable').isBoolean() && (!data.exists() ? newData.child('claimable').val() === true : newData.child('device_uid').val() === data.child('device_uid').val() && ((!data.child('owner_uid').exists() && !newData.child('owner_uid').exists()) || (newData.child('owner_uid').val() === data.child('owner_uid').val())) && ((!data.child('plant_id').exists() && !newData.child('plant_id').exists()) || (newData.child('plant_id').val() === data.child('plant_id').val()))))"
+      }
+    },
+
+    "device_public": {
+      "$deviceId": {
+        ".read": "auth != null",
+        ".write": "auth != null && ((auth.token.firebase.sign_in_provider === 'anonymous' && auth.uid === root.child('devices').child($deviceId).child('device_uid').val()) || (auth.token.firebase.sign_in_provider !== 'anonymous' && root.child('devices').child($deviceId).child('owner_uid').val() === auth.uid && newData.child('claimable').val() === true))",
+        ".validate": "!newData.exists() || (newData.child('device_id').val() === $deviceId && newData.child('last_seen').isNumber() && newData.child('online').isBoolean() && newData.child('claimable').isBoolean())"
+      }
+    },
+
+    "plants": {
+      "$plantId": {
+        ".read": "auth != null && data.child('owner_uid').val() === auth.uid",
+        ".write": "auth != null && ((!data.exists() && newData.exists() && newData.child('owner_uid').val() === auth.uid) || (data.exists() && data.child('owner_uid').val() === auth.uid && (!newData.exists() || (newData.child('current_data').val() === data.child('current_data').val() && newData.child('commands').val() === data.child('commands').val()))))",
+        ".validate": "!newData.exists() || (newData.child('owner_uid').isString() && newData.child('name').isString() && newData.child('device_id').isString() && ((!data.exists() && newData.child('owner_uid').val() === auth.uid) || (data.exists() && newData.child('owner_uid').val() === data.child('owner_uid').val() && newData.child('device_id').val() === data.child('device_id').val())))",
+
+        "current_data": {
+          ".write": "auth != null && auth.token.firebase.sign_in_provider === 'anonymous' && root.child('plants').child($plantId).child('device_id').isString() && root.child('devices').child(root.child('plants').child($plantId).child('device_id').val()).child('device_uid').val() === auth.uid && root.child('devices').child(root.child('plants').child($plantId).child('device_id').val()).child('plant_id').val() === $plantId",
+          ".validate": "!newData.exists() || (newData.child('soil_moisture').isNumber() && newData.child('temperature').isNumber() && newData.child('humidity').isNumber() && newData.child('light').isNumber() && newData.child('water_level').isNumber() && newData.child('last_updated').isNumber())"
+        },
+
+        "commands": {
+          ".write": "auth != null && data.parent().child('owner_uid').val() === auth.uid",
+          ".validate": "!newData.exists() || (newData.child('water_now').isBoolean() && newData.child('updated_at').isNumber())"
+        }
+      }
+    },
+
+    "sensor_history": {
+      "$plantId": {
+        ".read": "auth != null && root.child('plants').child($plantId).child('owner_uid').val() === auth.uid",
+        "$timestamp": {
+          ".write": "auth != null && auth.token.firebase.sign_in_provider === 'anonymous' && root.child('plants').child($plantId).child('device_id').val() != null && root.child('devices').child(root.child('plants').child($plantId).child('device_id').val()).child('device_uid').val() === auth.uid && root.child('devices').child(root.child('plants').child($plantId).child('device_id').val()).child('plant_id').val() === $plantId",
+          ".validate": "!newData.exists() || (newData.child('soil_moisture').isNumber() && newData.child('temperature').isNumber() && newData.child('humidity').isNumber() && newData.child('light').isNumber() && newData.child('water_level').isNumber())"
+        }
+      }
+    }
+  }
+}

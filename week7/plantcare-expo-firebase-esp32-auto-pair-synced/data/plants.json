@@ -1,0 +1,59 @@
+{
+  "plants": [
+    {
+      "id": 1,
+      "name": "Tomato Plant",
+      "type": "Cà chua",
+      "location": "Khu vườn ban công",
+      "moisture": 42,
+      "temperature": 29,
+      "airHumidity": 63,
+      "light": 70,
+      "status": "Tốt"
+    },
+    {
+      "id": 2,
+      "name": "Lettuce",
+      "type": "Xà lách",
+      "location": "Khu vườn ban công",
+      "moisture": 58,
+      "temperature": 27,
+      "airHumidity": 68,
+      "light": 62,
+      "status": "Tốt"
+    },
+    {
+      "id": 3,
+      "name": "Pepper",
+      "type": "Ớt chuông",
+      "location": "Khu vườn",
+      "moisture": 36,
+      "temperature": 30,
+      "airHumidity": 59,
+      "light": 76,
+      "status": "Cần tưới"
+    },
+    {
+      "id": 4,
+      "name": "Eggplant",
+      "type": "Cà tím",
+      "location": "Khu vườn",
+      "moisture": 67,
+      "temperature": 28,
+      "airHumidity": 65,
+      "light": 72,
+      "status": "Tốt"
+    },
+    {
+      "id": 5,
+      "name": "Cucumber",
+      "type": "Dưa chuột",
+      "location": "Khu vườn",
+      "moisture": 29,
+      "temperature": 31,
+      "airHumidity": 55,
+      "light": 79,
+      "status": "Cần tưới"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "PlantCare",
+    "slug": "plantcare",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#F7FAF4"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.example.plantcare"
+    },
+    "ios": {
+      "bundleIdentifier": "com.example.plantcare"
+    }
+  }
+}
